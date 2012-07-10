@@ -32,8 +32,9 @@ class cli(object):
         command that is not matched by any of the command patterns. By 
         default this is to display "Invalid command" and return the prompt.
         The no match function should take two parameters. These parameters
-        are the same as would be accepted by function passed to the
-        addCommand() function"""
+        are similar to those accepted by function passed to the addCommand()
+        function. The first is the user entered command, the second is the
+        cli object, not a dictionary."""
         if not hasattr(function, '__call__'):
             error('no match function should be a function')
         self.__noMatch = function
