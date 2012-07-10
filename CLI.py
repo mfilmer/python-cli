@@ -5,7 +5,7 @@ class cli(object):
 	def __init__(self):
 		self.__prompt = lambda : '> '
 		self.__noMatch = lambda x : print('Invalid command')
-		self.__exit = ['exit','quit']
+		self.__exit = [['exit'],['quit']]
 		self.__commands = []
 	
 	#The prompt should be a function that returns a string
