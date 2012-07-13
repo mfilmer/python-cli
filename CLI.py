@@ -19,7 +19,7 @@ class cli(object):
         The default prompt function is:
         lambda : '> '"""
         if not hasattr(prompt, '__call__'):
-            error('prompt should be a function')
+            raise Exception('prompt should be a function')
         self.__prompt = prompt
     
     #The no match action should be a function, usually that
@@ -36,7 +36,7 @@ class cli(object):
         function. The first is the user entered command, the second is the
         cli object, not a dictionary."""
         if not hasattr(function, '__call__'):
-            error('no match function should be a function')
+            raise Exception('no match function should be a function')
         self.__noMatch = function
     
     #a list of patterns to exit on
@@ -51,7 +51,7 @@ class cli(object):
         for p in exitList:
             tmp = p.split()
             if not self.__isValidPattern(tmp):
-                error('invalid pattern in exitList')
+                raise Exception('invalid pattern in exitList')
             newList.append(tmp)
         self.__exit = newList
     
@@ -118,7 +118,7 @@ class cli(object):
         
         commands = pattern.split()
         if not self.__isValidPattern(commands):
-            error('invalid command pattern \'' + pattern + '\'')
+            raise Exception('invalid command pattern \'' + pattern + '\'')
         self.__commands.append((commands,function))
     
     #determine if a given command matches a pattern
@@ -127,7 +127,7 @@ class cli(object):
     #pattern and command should be passed as lists of strings
     def __matchCommand(self,pattern,command):
         if not self.__isValidPattern(pattern):
-            error('invalid pattern')
+            raise Exception('invalid pattern')
         if len(pattern) != len(command):
             return False
         vars = {'cli':self}
