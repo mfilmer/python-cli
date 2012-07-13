@@ -11,7 +11,7 @@ This module is designed to assist in writing programs where the main interface t
 Methods
 -------
 
-There are only a few public methods, they are:
+The following are the public methods:
 1. addCommand()
 2. setPrompt()
 3. setNoMatch()

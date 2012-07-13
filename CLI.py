@@ -55,7 +55,7 @@ class cli(object):
             newList.append(tmp)
         self.__exit = newList
     
-    def addCommand(self,pattern,function):
+    def addCommand(self,pattern,function,args=None):
         """Specify a command pattern and a function to call. The function 
         will be called when a command matches the command pattern. 
         Extra whitespace between words is ignored in command patterns and in
@@ -119,7 +119,7 @@ class cli(object):
         commands = pattern.split()
         if not self.__isValidPattern(commands):
             error('invalid command pattern \'' + pattern + '\'')
-        self.__commands.append((commands,function))
+        self.__commands.append((commands,function,args))
     
     #determine if a given command matches a pattern
     #return a dictionary of all the variable values if it does match
@@ -184,10 +184,10 @@ class cli(object):
                     return (rawCommand,vars)
             
             #check if the command is a normal command
-            for pattern,function in self.__commands:
+            for pattern,function,args in self.__commands:
                 vars = self.__matchCommand(pattern,userCommand)
                 if vars != False:
                     function(rawCommand,vars)
                     break
             else: #i guess it isn't, call the no match function
-                self.__noMatch(userCommand,self)
+                self.__noMatch(rawCommand,self)
