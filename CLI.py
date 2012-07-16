@@ -138,12 +138,12 @@ class cli(object):
                 elif p[1] == 'f':
                     try:
                         vars[p[2:]] = float(c)
-                    except:
+                    except ValueError:
                         return False
                 elif p[1] == 'i':
                     try:
                         vars[p[2:]] = int(c)
-                    except:
+                    except ValueError:
                         return False
             elif p != c:
                 return False
@@ -174,9 +174,9 @@ class cli(object):
         command"""
         while True:
             #display prompt
-            try:
+            try:    #maybe expand this try block around the whole loop
                 rawCommand = raw_input(self.__prompt())
-            except KeyboardInterrupt:
+            except KeyboardInterrupt:   #if the user types ^C
                 break
             userCommand = rawCommand.split()
             
