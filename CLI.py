@@ -178,8 +178,12 @@ class cli(object):
                 rawCommand = raw_input(self.__prompt())
             except KeyboardInterrupt:   #if the user types ^C
                 break
-            userCommand = rawCommand.split()
             
+            #check if the command is nothing
+            if rawCommand == '':
+                continue
+            
+            userCommand = rawCommand.split()
             #check if the command is an exit command
             for p in self.__exit:
                 vars = self.__matchCommand(p,userCommand)
