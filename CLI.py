@@ -176,7 +176,7 @@ class cli(object):
             #display prompt
             try:
                 rawCommand = raw_input(self.__prompt())
-            except EOFError
+            except EOFError:
                 break
             except KeyboardInterrupt:
                 break
