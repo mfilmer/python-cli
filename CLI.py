@@ -174,7 +174,12 @@ class cli(object):
         command"""
         while True:
             #display prompt
-            rawCommand = raw_input(self.__prompt())
+            try:
+                rawCommand = raw_input(self.__prompt())
+            except EOFError
+                break
+            except KeyboardInterrupt:
+                break
             userCommand = rawCommand.split()
             
             #check if the command is an exit command
