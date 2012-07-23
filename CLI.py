@@ -178,6 +178,8 @@ class cli(object):
                 rawCommand = raw_input(self.__prompt())
             except KeyboardInterrupt:   #if the user types ^C
                 break
+            except EOFError:    #sometimes this is the ^C exception
+                break
             
             #check if the command is nothing
             if rawCommand == '':
