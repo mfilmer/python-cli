@@ -9,7 +9,7 @@ class cli(object):
         self.__prompt = lambda : '> '
         self.__noMatch = lambda x,y : print('Invalid command')
         self.__exit = [['exit'],['quit']]
-        self.__commands = []
+        self.__commands = [([],lambda x,y:None)]
     
     #The prompt should be a function that returns a string
     def setPrompt(self,prompt):
@@ -180,11 +180,7 @@ class cli(object):
                 break
             except EOFError:    #sometimes this is the ^C exception
                 break
-            
-            #check if the command is nothing
-            if rawCommand == '':
-                continue
-            
+
             userCommand = rawCommand.split()
             #check if the command is an exit command
             for p in self.__exit:
