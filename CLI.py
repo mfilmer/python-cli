@@ -118,7 +118,7 @@ class cli(object):
         
         commands = pattern.split()
         if not self.__isValidPattern(commands):
-            raise Exception('invalid command pattern \'' + pattern + '\'')
+            raise ValueError('invalid command pattern \'' + pattern + '\'')
         self.__commands.append((commands,function))
     
     #determine if a given command matches a pattern
@@ -127,7 +127,7 @@ class cli(object):
     #pattern and command should be passed as lists of strings
     def __matchCommand(self,pattern,command):
         if not self.__isValidPattern(pattern):
-            raise Exception('invalid pattern')
+            raise ValueError('invalid pattern')
         if len(pattern) != len(command):
             return False
         vars = {'cli':self}
