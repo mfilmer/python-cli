@@ -14,7 +14,7 @@ and these commands trigger function calls from within this module.
 Methods
 -------
 
-The following are the public methods:
+The following are the public methods:  
 1. addCommand()  
 2. delCommand()  
 3. setPrompt()  
@@ -43,12 +43,13 @@ then added using addCommand().
 
 The prompt specified should be a function that returns a string. This function 
 is called every time a prompt is to be displayed. The default prompt function 
-is: `lambda : '> '`
+is:  
+`lambda : '> '`
 
 ### setNoMatch(function)
 
 The no match function is the function called if there is no matching pattern 
-found. The default no match function is:
+found. The default no match function is:  
 `lambda x : print('Invalid command')`
 
 The no match function must take exactly two parameters. The first is the 
