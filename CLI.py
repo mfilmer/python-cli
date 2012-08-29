@@ -1,6 +1,5 @@
 from __future__ import print_function
 import re
-#from __future__ import division        #division is not actually used
 
 class cli(object):
     """Module to allow for easy implementation of a 
@@ -8,9 +7,9 @@ class cli(object):
     def __init__(self):
         """Set up default prompt, no match actions, and exit commands"""
         self.__prompt = lambda : '> '
-        self.__noMatch = lambda x,y : print('Invalid command')
+        self.__noMatch = lambda x : print('Invalid command')
         self.__exit = map(re.compile,['^exit$','^quit$'])
-        self.__commands = [([],lambda x,y:None)]
+        self.__commands = [(r'^ *$',lambda x,y:None)]
 
     #The prompt should be a function that returns a string
     def setPrompt(self,prompt):
@@ -23,15 +22,15 @@ class cli(object):
             raise ValueError('prompt should be a function')
         self.__prompt = prompt
 
-    #The no match action should be a function, usually that
+    #The no match action should be a function, usually one that
     #prints an applicable error message
-    #if the no match function returns True, the run loop
-    #will exit. if the no match function returns False or
-    #None, the run loop will continue
+    #if the no match function returns None, the run loop will continue. 
+    #if the no match function returns anything else, the run loop will 
+    #return that value.
     def setNoMatch(self,function):
         """The no match function is the function called when a user enters a
         command that is not matched by any of the command patterns. By 
-        default this is to display "Invalid command" and return the prompt.
+        default this is to display "Invalid command" and return to the prompt.
         The no match function should take two parameters. These parameters
         are similar to those accepted by function passed to the addCommand()
         function. The first is the user entered command, the second is the
@@ -51,16 +50,31 @@ class cli(object):
         self.__exit = [re.compile(p) for p in exitList]
 
     def addCommand(self,pattern,function):
-        """Specify a command pattern and a function to call. The function 
-        will be called when a command matches the command pattern. 
-        The command pattern should be formatted according to python's regular
+        """Specify a command pattern to match and a function to call. The 
+        function will be called when a command matches the command pattern. 
+        The command pattern should be formatted according to python's regular 
         expression rules"""
-        
-        self.__commands.append((re.compile(pattern),function))
+        p = re.compile(pattern)
+        for index,(patt,func) in enumerate(self.__commands):
+            if p == patt:
+                self.__commands[index] = (p,func)
+                break
+        else:
+            self.__commands.append((p,function))
+
+    def delCommand(self,pattern):
+        p = re.compile(pattern)
+        for index,(patt,func) in enumerate(self.__commands):
+            if p == patt:
+                del(self.__commands[index])
+                break
+        else:
+            raise ValueError('That pattern does not exist')
+                
 
     #determine if a given command matches a pattern
     #return a dictionary of all the variable values if it does match
-    #return False if it does not match
+    #return None if it does not match
     def __matchCommand(self,pattern,command):
         a = pattern.match(command)
         if a is not None:
@@ -69,9 +83,9 @@ class cli(object):
     #run the prompt loop
     #return the value of the exit command variables in a dictionary
     def run(self):
-        """Run the main loop. During this loop the prompt will be displayed
-        and the program will wait for user entered commands. This function
-        will return a dictionary containing values extracted from the exit
+        """Run the main loop. During this loop the prompt will be displayed 
+        and the program will wait for user entered commands. This function 
+        will return a dictionary containing values extracted from the exit 
         command"""
         while True:
             #display prompt
@@ -92,7 +106,11 @@ class cli(object):
             for pattern,function in self.__commands:
                 vars = self.__matchCommand(pattern,userCommand)
                 if vars is not None:
-                    function(userCommand,vars)
+                    retValue = function(userCommand,vars)
+                    if retValue is not None:
+                        return retValue
                     break
             else: #i guess it isn't, call the no match function
-                self.__noMatch(userCommand,self)
+                retValue = self.__noMatch(userCommand)
+                if retValue is not None:
+                    return retValue

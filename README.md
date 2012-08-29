@@ -13,21 +13,25 @@ Methods
 
 The following are the public methods:
 1. addCommand()
-2. setPrompt()
-3. setNoMatch()
-4. setExit()
-5. run()
+2. delCommand()
+3. setPrompt()
+4. setNoMatch()
+5. setExit()
+6. run()
 
 These commands allow the developer to set up patterns for user entered commands. When a command matches a pattern, it triggers a function call. The function gets the original command line passed to it, along with extracted data as defined in the pattern.
 
 ###addCommand(pattern,function)
 
-Other than run(), this is the most important method. It is what defines new patterns for user entered commands and specifies the function that should be called when the pattern is matched. 
+Other than run(), this is the most important method. It is what defines new 
+patterns for user entered commands and specifies the function that should be 
+called when the pattern is matched. 
 
 ###setPrompt(prompt)
 
-The prompt specified should be a function that returns a string. This function is called every time a prompt is to be displayed. The default prompt function is:
-lambda : '> '
+The prompt specified should be a function that returns a string. This function 
+is called every time a prompt is to be displayed. The default prompt function 
+is: `lambda : '> '`
 
 ###setNoMatch(function)
 
