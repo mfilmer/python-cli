@@ -8,8 +8,8 @@ class cli(object):
         """Set up default prompt, no match actions, and exit commands"""
         self.__prompt = lambda : '> '
         self.__noMatch = lambda x : print('Invalid command')
-        self.__exit = map(re.compile,['^exit$','^quit$'])
-        self.__commands = [(r'^ *$',lambda x,y:None)]
+        self.__exit = map(re.compile,['^exit *$','^quit *$'])
+        self.__commands = [(re.compile(r'^ *$'),lambda x,y:None)]
 
     #The prompt should be a function that returns a string
     def setPrompt(self,prompt):
