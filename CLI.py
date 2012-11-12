@@ -13,10 +13,10 @@ class cli(object):
 
     #The prompt should be a function that returns a string
     def setPrompt(self,prompt):
-        """Supply a function that returns a string. This function is called
-        every time the prompt is to be displayed. The returned string will
-        be the prompt. Normally the string should end in a space ie: '> '
-        The default prompt function is:
+        """Supply a function that returns a string. This function is called 
+        every time the prompt is to be displayed. The returned string will 
+        be the prompt. Normally the string should end in a space ie: '> ' 
+        The default prompt function is: 
         lambda : '> '"""
         if not hasattr(prompt, '__call__'):
             raise ValueError('prompt should be a function')
